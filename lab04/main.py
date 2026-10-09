@@ -4,16 +4,19 @@ from stats import read_valid, average_by_city, warmest_city
 
 def main():
     lines = sys.stdin.read().splitlines()
-    valid_records, skipped = read_valid(lines)
+
+    # теперь read_valid возвращает только список валидных словарей
+    valid_records = read_valid(lines)
     parsed_count = len(valid_records)
 
-    # вывод 1: сколько записей разобрано
+    # вычисляем пропущенные строки:
+    # всего строк - пустые строки - валидные записи
+    empty_lines = sum(1 for line in lines if not line.strip())
+    skipped_count = len(lines) - empty_lines - parsed_count
+
     print(parsed_count)
+    print(skipped_count)
 
-    # вывод 2: сколько строк пропущено
-    print(skipped)
-
-    # вывод 3: средняя температура самого теплого города
     if parsed_count > 0:
         warm_city = warmest_city(valid_records)
         result_temp = average_by_city(valid_records)[warm_city]
