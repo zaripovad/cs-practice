@@ -21,7 +21,20 @@ def parse_record(line: str) -> dict:
 
 
 def read_valid(lines: list[str]) -> tuple[list[dict], int]:
-    pass
+    valid_records = []
+    skipped_count = 0
+
+    for line in lines:
+        if not line.strip():  # Пропускаем пустые строки молча
+            continue
+
+        try:
+            record = parse_record(line)
+            valid_records.append(record)
+        except ValueError:
+            skipped_count += 1
+
+    return valid_records, skipped_count
 
 
 def average_by_city(records: list[dict]) -> dict:
