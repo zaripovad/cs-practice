@@ -13,28 +13,27 @@ def parse_record(line: str) -> dict:
         raise ValueError(f"дата не указана в строке: {line}")
 
     try:
-        temp = float(temp_str)
+        temp = float(temp_str.strip())
     except ValueError:
         raise ValueError(f"температура не является числом в строке: {line}")
 
     return {"city": city.strip(), "temperature": temp, "date": date.strip()}
 
 
-def read_valid(lines: list[str]) -> tuple[list[dict], int]:
+def read_valid(lines: list[str]) -> list[dict]:
     valid_records = []
-    skipped_count = 0
 
     for line in lines:
-        if not line.strip():  # Пропускаем пустые строки молча
+        if not line.strip():  # пропускаем пустые строки молча
             continue
 
         try:
             record = parse_record(line)
             valid_records.append(record)
         except ValueError:
-            skipped_count += 1
+            pass  # просто пропускаем негодные строки, не считая их здесь
 
-    return valid_records, skipped_count
+    return valid_records
 
 
 def average_by_city(records: list[dict]) -> dict:
