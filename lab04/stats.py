@@ -13,7 +13,7 @@ def parse_record(line: str) -> dict:
         raise ValueError(f"дата не указана в строке: {line}")
 
     try:
-        temp = float(temp_str.strip())
+        temp = float(temp_str.strip().replace(',','.'))
     except ValueError:
         raise ValueError(f"температура не является числом в строке: {line}")
 
