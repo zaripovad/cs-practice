@@ -5,12 +5,9 @@ from stats import read_valid, average_by_city, warmest_city
 def main():
     lines = sys.stdin.read().splitlines()
 
-    # теперь read_valid возвращает только список валидных словарей
     valid_records = read_valid(lines)
     parsed_count = len(valid_records)
 
-    # вычисляем пропущенные строки:
-    # всего строк - пустые строки - валидные записи
     empty_lines = sum(1 for line in lines if not line.strip())
     skipped_count = len(lines) - empty_lines - parsed_count
 
