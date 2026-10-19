@@ -38,3 +38,51 @@ def count_levels(lines) -> dict:
             counts["BROKEN"] = counts.get("BROKEN", 0) + 1
 
     return counts
+
+
+def top_errors(lines, n: int) -> list[list]:
+
+    errors_count = {}
+    for line in lines:
+        if not line.strip():
+            continue
+
+        try:
+            event = parse_event(line)
+            if event["level"] == "ERROR":
+                msg = event["message"]
+                errors_count[msg] = errors_count.get(msg, 0) + 1
+        except ValueError:
+
+            continue
+
+
+    errors_list = [[msg, count] for msg, count in errors_count.items()]
+
+
+    errors_list.sort(key=lambda x: (-x[1], x[0]))
+
+
+    return errors_list[:n]
+
+
+def format_report(counts: dict, errors: list[list]) -> str:
+
+    report = "Отчёт по журналу\n\n"
+
+
+    for level in sorted(counts.keys()):
+        report += f"{level}: {counts[level]}\n"
+
+    report += "\nЧастые ошибки:\n"
+
+
+    for msg, count in errors:
+        report += f"- {msg} — {count}\n"
+
+    return report
+
+
+
+
+
