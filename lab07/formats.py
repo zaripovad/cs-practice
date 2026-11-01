@@ -66,10 +66,11 @@ def convert_yaml_value(val_str: str):
         return False
 
     try:
-        if '.' not in val_str:
+
+        if '.' not in val_str and ',' not in val_str:
             return int(val_str)
         else:
-            return float(val_str)
+            return float(val_str.replace(',', '.'))
 
     except ValueError:
         return val_str
@@ -92,3 +93,4 @@ def merge_by_key(rows: list[dict], extra: dict, key: str = 'id') -> list[dict]:
 
 def records_to_json(records: list[dict]) -> str:
     return json.dumps(records, indent=2, sort_keys=True, ensure_ascii=False)
+
