@@ -66,13 +66,13 @@ def convert_yaml_value(val_str: str):
         return False
 
     try:
-            if '.' not in val_str and ',' not in val_str:
-                return int(val_str)
-            else:
-                return
-    float(val_str.replace(',','.'))
-        except ValueError:
-            return val_str
+        if '.' not in val_str and ',' not in val_str:
+            return int(val_str)
+        else:
+            return float(val_str.replace(',','.'))
+
+    except ValueError:
+        return val_str
 
 
 def merge_by_key(rows: list[dict], extra: dict, key: str = 'id') -> list[dict]:
