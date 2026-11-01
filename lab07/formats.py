@@ -72,3 +72,19 @@ def convert_yaml_value(val_str: str):
             return float(val_str)
     except ValueError:
         return val_str
+
+
+def merge_by_key(rows: list[dict], extra: dict, key: str = 'id') -> list[dict]:
+    result = []
+
+    for row in rows:
+        row_key_val = row.get(key)
+
+        if row_key_val in extra:
+            merged_row = extra[row_key_val].copy()
+            merged_row.update(row)
+            result.append(merged_row)
+        else:
+            result.append(row)
+
+    return result
