@@ -57,3 +57,35 @@ corner = matrix[-2:, -2:]
 print('угловой блок 2 на 2:', corner, 'shape:', corner.shape)
 
 
+vector = np.array([10, 20, 30, 40, 50])
+vector[1:4] = 0
+
+small_matrix = np.arange(1, 10).reshape(3, 3)
+small_matrix[0, :] = -1
+small_matrix[1:, 1:] = 9
+
+changed_hours = hours.copy()
+changed_hours[2:5] = 99
+changed_hours[::2] = -1
+
+print('changed_hours:', changed_hours)
+print('исходный hours:', hours)
+# если написать changed_hours = hours, то в Python переменная changed_hours не создаст новый массив, а просто станет ссылкой на тот же участок памяти, где лежит hours, те любое изменение в changed_hours изменит и hours, copy() создает физическую копию массива в памяти
+
+changed_matrix = matrix.copy()
+changed_matrix[1, :] = 0
+changed_matrix[:, -1] = -1
+changed_matrix[1:4, 1:4] = 100
+
+print('итоговая changed_matrix:', changed_matrix)
+print('исходная matrix:', matrix)
+
+
+numbers = np.arange(12)
+table = numbers.reshape(3, 4)
+transposed = table.T
+
+print('форма numbers:', numbers.shape)
+print('форма table:', table.shape)
+print('форма transposed:', transposed.shape)
+# reshape(3, 4) работает тк 3 * 4 = 12 и все элементы помещаются, а reshape(5, 3) вызовет ошибку тк 5 * 3 = 15 и нам не хватит 3 элемента
